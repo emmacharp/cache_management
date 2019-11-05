@@ -16,7 +16,7 @@
 
 		public function __construct() {
 			parent::__construct();
-			$this->_Result = new XMLElement('span', null, array('class' => 'frame'));
+			$this->_Result = new XMLElement('p');
 		}
 
 
@@ -32,28 +32,33 @@
 
 			$this->appendSubheading(__($title));
 
+			$primary = new XMLElement('div', null, array('class' => 'primary'));
 			$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
+			$container = new XMLElement('div', null, array('class' => 'container'));
 
 			$fieldset->appendChild(new XMLElement('legend',__('Please choose what to delete')));
 			$fieldset->appendChild(new XMLElement('p', __('Removing will delete expired entries. Clearing will delete everything.'), array('class' => 'help')));
 
-			$fieldset->appendChild(Widget::Input('action[pur-file]', __('Remove expired file cache'), 'submit'));
-			$fieldset->appendChild(Widget::Input('action[pur-db]', __('Remove expired DB cache'), 'submit'));
+			$container->appendChild(Widget::Input('action[pur-file]', __('Remove expired file cache'), 'submit'));
+			$container->appendChild(Widget::Input('action[pur-db]', __('Remove expired DB cache'), 'submit'));
 
-			$fieldset->appendChild(Widget::Input('action[del-file]', __('Clear file cache'), 'submit'));
-			$fieldset->appendChild(Widget::Input('action[del-db]', __('Clear DB cache'), 'submit'));
+			$container->appendChild(Widget::Input('action[del-file]', __('Clear file cache'), 'submit'));
+			$container->appendChild(Widget::Input('action[del-db]', __('Clear DB cache'), 'submit'));
 
-			$fieldset->appendChild(Widget::Input('action[del-cachelite]', __('Clear cachelite files'), 'submit'));
+			$container->appendChild(Widget::Input('action[del-cachelite]', __('Clear cachelite files'), 'submit'));
 
 			if (is_dir(CACHE . '/cacheabledatasource')) {
-				$fieldset->appendChild(Widget::Input('action[del-cacheabledatasource]', __('Clear Cacheable Datasource files'), 'submit'));
+				$container->appendChild(Widget::Input('action[del-cacheabledatasource]', __('Clear Cacheable Datasource files'), 'submit'));
 			}
 
-			$this->Form->appendChild($fieldset);
+			$fieldset->appendChild($container);
+			$primary->appendChild($fieldset);
 
 			if ($this->showResult) {
-				$this->Form->appendChild($this->_Result);
+				$container->appendChild($this->_Result);
 			}
+
+			$this->Form->appendChild($primary);
 		}
 
 		/**
