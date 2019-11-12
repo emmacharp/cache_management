@@ -32,7 +32,6 @@
 
 			$this->appendSubheading(__($title));
 
-			$primary = new XMLElement('div', null, array('class' => 'primary'));
 			$fieldset = new XMLElement('fieldset', null, array('class' => 'settings'));
 			$container = new XMLElement('div', null, array('class' => 'container'));
 
@@ -52,13 +51,11 @@
 			}
 
 			$fieldset->appendChild($container);
-			$primary->appendChild($fieldset);
+			$this->Primary->appendChild($fieldset);
 
 			if ($this->showResult) {
 				$container->appendChild($this->_Result);
 			}
-
-			$this->Form->appendChild($primary);
 		}
 
 		/**
